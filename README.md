@@ -11,6 +11,8 @@ npm run dev
 
 Open the local URL printed by Vite. A browser with WebGL support is required.
 
+On Windows, `scripts/start-glide.ps1` builds the app, serves it in the background at http://localhost:4300/ and opens it in a standalone Edge (or Chrome) app window; closing that window stops the server. To launch it without a console window, point a desktop shortcut at `conhost.exe --headless powershell.exe -NoProfile -ExecutionPolicy Bypass -File <repo>\scripts\start-glide.ps1` with `scripts/glide.ico` as its icon. Server output goes to `%LOCALAPPDATA%\Glide\server.log`.
+
 ## Flying
 
 Before takeoff, choose a glider: the **ASK 21** trainer rolls quickly and stalls late but sinks faster, the **LS8-18** is the balanced default, and the **Nimbus-4** glides furthest but turns slowly and needs more speed. Restart to pick again.
