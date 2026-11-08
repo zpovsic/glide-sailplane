@@ -112,7 +112,7 @@ button.icon-button:active {
   flex-shrink: 0;
 }
 .brand-description {
-  font-size: 11px;
+  font-size: 13px;
   color: #9ea99c;
   letter-spacing: 0.05px;
   white-space: nowrap;
@@ -126,7 +126,7 @@ button.icon-button:active {
   gap: 27px;
 }
 .main-nav button {
-  font-size: 12px;
+  font-size: 14px;
   display: flex;
   gap: 8px;
   align-items: center;
@@ -157,7 +157,7 @@ button.icon-button:active {
   gap: 13px;
 }
 .location {
-  font-size: 11px;
+  font-size: 13px;
   color: #bec6b9;
   display: flex;
   align-items: center;
@@ -229,7 +229,7 @@ button.icon-button:active {
   pointer-events: auto;
 }
 .region-label {
-  font-size: 9px;
+  font-size: 11px;
   letter-spacing: 2.2px;
   display: flex;
   align-items: center;
@@ -259,7 +259,7 @@ button.icon-button:active {
   color: #f7faef;
 }
 .flight-intro p {
-  font-size: 13px;
+  font-size: 15px;
   line-height: 1.9;
   letter-spacing: 0.05px;
   color: #e5ecdf;
@@ -275,7 +275,7 @@ button.icon-button:active {
   align-items: center;
   justify-content: center;
   gap: 25px;
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 650;
   min-height: 43px;
   box-shadow: 0 2px 5px rgba(26, 45, 28, 0.06);
@@ -286,7 +286,7 @@ button.icon-button:active {
 }
 .intro-note {
   display: block;
-  font-size: 10px;
+  font-size: 12px;
   letter-spacing: 0.3px;
   color: #d9e4d4;
   margin-top: 13px;
@@ -296,7 +296,7 @@ button.icon-button:active {
   letter-spacing: -1.8px;
 }
 .flight-intro.is-flying p {
-  font-size: 12px;
+  font-size: 14px;
 }
 .glass {
   background: var(--panel);
@@ -321,7 +321,7 @@ button.icon-button:active {
   background: none;
   padding: 18px 18px 15px;
   cursor: default;
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 550;
 }
 .conditions-heading > span {
@@ -355,7 +355,7 @@ button.icon-button:active {
   border-radius: 7px;
   padding: 13px 5px 10px;
   color: #aebba8;
-  font-size: 10px;
+  font-size: 12px;
 }
 .weather-options button.selected {
   background: #d9f5a6;
@@ -369,7 +369,7 @@ button.icon-button:active {
 .wind-label {
   display: flex;
   justify-content: space-between;
-  font-size: 11px;
+  font-size: 13px;
   align-items: center;
   margin-bottom: 11px;
 }
@@ -384,7 +384,7 @@ button.icon-button:active {
   font-variant-numeric: tabular-nums;
 }
 .wind-label small {
-  font-size: 9px;
+  font-size: 11px;
   color: #a9b8a6;
   font-weight: 400;
 }
@@ -421,7 +421,7 @@ button.icon-button:active {
 .range-labels {
   display: flex;
   justify-content: space-between;
-  font-size: 8px;
+  font-size: 10px;
   color: #95a58f;
 }
 .conditions-details {
@@ -434,7 +434,7 @@ button.icon-button:active {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  font-size: 10px;
+  font-size: 12px;
 }
 .conditions-details > div > span {
   display: flex;
@@ -443,7 +443,7 @@ button.icon-button:active {
   color: #aebca7;
 }
 .conditions-details strong {
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 500;
   color: #e1ead8;
   font-variant-numeric: tabular-nums;
@@ -451,7 +451,7 @@ button.icon-button:active {
 .conditions-details em {
   font-style: normal;
   color: #a1b096;
-  font-size: 9px;
+  font-size: 11px;
   margin-left: 4px;
 }
 .lime {
@@ -461,7 +461,7 @@ button.icon-button:active {
   display: flex;
   align-items: center;
   gap: 6px;
-  font-size: 9px;
+  font-size: 11px;
   border-top: 1px solid var(--line);
   padding: 13px 0 14px;
   color: #b8c9ac;
@@ -492,12 +492,12 @@ button.icon-button:active {
   justify-content: space-between;
   align-items: center;
   color: rgba(246, 251, 239, 0.66);
-  font-size: 9px;
+  font-size: 11px;
   height: 21px;
   font-variant-numeric: tabular-nums;
 }
 .scene-compass b {
-  font-size: 12px;
+  font-size: 14px;
   color: #f3f7eb;
   font-weight: 550;
 }
@@ -533,12 +533,12 @@ button.icon-button:active {
 }
 .thermal-indicator strong {
   display: block;
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 500;
   letter-spacing: 0.2px;
 }
 .thermal-indicator > div > span {
-  font-size: 8px;
+  font-size: 10px;
   color: #e4efd7;
   margin-top: 3px;
   display: block;
@@ -570,6 +570,160 @@ button.icon-button:active {
 }
 .in-thermal {
   background: rgba(75, 101, 45, 0.65);
+}
+.bottom-layout.is-hidden {
+  visibility: hidden;
+}
+.glider-picker {
+  position: absolute;
+  bottom: 24px;
+  left: 28px;
+  right: 290px;
+  max-width: 720px;
+  padding: 14px 16px 16px;
+  border-radius: 13px;
+  z-index: 3;
+}
+.glider-picker-heading {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 12px;
+}
+.glider-picker-heading h2 {
+  font:
+    400 21px/1.2 Georgia,
+    serif;
+  letter-spacing: -0.3px;
+  margin: 0;
+  color: #f2f6ea;
+}
+.glider-picker-heading span {
+  font-size: 13px;
+  color: #b9c9ae;
+  text-align: right;
+}
+.glider-options {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+.glider-option {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 8px;
+  padding: 7px;
+  border-radius: 10px;
+  border: 1px solid var(--line);
+  background: rgba(14, 24, 20, 0.35);
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition:
+    border-color 0.2s,
+    background 0.2s;
+}
+.glider-option:hover {
+  border-color: rgba(217, 245, 166, 0.4);
+}
+.glider-option.selected {
+  border-color: var(--lime);
+  background: rgba(217, 245, 166, 0.1);
+}
+.glider-option:focus-visible {
+  outline: 2px solid var(--lime);
+  outline-offset: 2px;
+}
+.glider-option img {
+  width: 100%;
+  height: 78px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+.glider-option-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+  padding: 0 3px 2px;
+}
+.glider-option-text strong {
+  font-size: 15px;
+  font-weight: 600;
+  color: #f2f6ea;
+}
+.glider-option-text span {
+  font-size: 12px;
+  color: #c3d1b9;
+}
+.glider-option-text small {
+  font-size: 11px;
+  color: #8fa088;
+  font-variant-numeric: tabular-nums;
+}
+.glider-check {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--lime);
+  color: #263a24;
+}
+@media (max-width: 1100px) {
+  .glider-picker {
+    left: 22px;
+    right: 265px;
+  }
+  .glider-picker-heading span {
+    display: none;
+  }
+  .glider-option img {
+    height: 60px;
+  }
+}
+@media (max-height: 760px) {
+  .intro-note {
+    display: none;
+  }
+  .glider-option img {
+    height: 52px;
+  }
+  .glider-option-text span {
+    display: none;
+  }
+}
+@media (max-width: 680px) {
+  .glider-picker {
+    bottom: 15px;
+    left: 13px;
+    right: 13px;
+    padding: 12px;
+  }
+  .glider-picker-heading h2 {
+    font-size: 17px;
+  }
+  .glider-options {
+    gap: 7px;
+  }
+  .glider-option {
+    padding: 5px;
+  }
+  .glider-option img {
+    height: 48px;
+  }
+  .glider-option-text strong {
+    font-size: 13px;
+  }
+  .glider-option-text span {
+    display: none;
+  }
 }
 .bottom-layout {
   position: absolute;
@@ -603,7 +757,7 @@ button.icon-button:active {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 500;
   color: #c7d2bd;
 }
@@ -632,7 +786,7 @@ button.icon-button:active {
   flex-direction: column;
   align-items: center;
   gap: 4px;
-  font-size: 8px;
+  font-size: 10px;
   color: #c2d4b3;
 }
 .map-north span {
@@ -647,7 +801,7 @@ button.icon-button:active {
   display: flex;
   align-items: center;
   gap: 6px;
-  font-size: 8px;
+  font-size: 10px;
   color: #adbc9e;
 }
 .map-scale > span {
@@ -663,7 +817,7 @@ button.icon-button:active {
   display: flex;
   align-items: center;
   gap: 5px;
-  font-size: 8px;
+  font-size: 10px;
   color: #aebca1;
 }
 .map-legend > i {
@@ -686,7 +840,7 @@ button.icon-button:active {
   gap: 23px;
   margin: 0 0 15px;
   color: #e0e9d9;
-  font-size: 9px;
+  font-size: 11px;
   text-shadow: 0 1px 5px #2d442a;
 }
 .keyboard-hints > span {
@@ -695,7 +849,7 @@ button.icon-button:active {
   gap: 5px;
 }
 .keyboard-hints kbd {
-  font-size: 11px;
+  font-size: 13px;
   min-width: 17px;
   height: 18px;
   padding: 0 4px;
@@ -712,14 +866,14 @@ button.icon-button:active {
   margin-right: 3px;
 }
 .keyboard-hints kbd.space-key {
-  font-size: 8px;
+  font-size: 10px;
   padding: 0 6px;
 }
 .keyboard-hints > button {
   background: none;
   padding: 0;
   color: #dce8d2;
-  font-size: 9px;
+  font-size: 11px;
   display: flex;
   align-items: center;
   gap: 7px;
@@ -745,7 +899,7 @@ button.icon-button:active {
   display: flex;
   align-items: center;
   gap: 6px;
-  font-size: 9px;
+  font-size: 11px;
   color: #a8b79e;
   white-space: nowrap;
 }
@@ -765,7 +919,7 @@ button.icon-button:active {
 }
 .instrument-value > span {
   font-family: "DM Sans", sans-serif;
-  font-size: 9px;
+  font-size: 11px;
   letter-spacing: 0;
   color: #b9c7ae;
   margin-left: 5px;
@@ -775,7 +929,7 @@ button.icon-button:active {
   color: var(--lime);
 }
 .instrument-caption {
-  font-size: 7px;
+  font-size: 9px;
   color: #829579;
   margin-top: 8px;
   white-space: nowrap;
@@ -798,13 +952,7 @@ button.icon-button:active {
 .vario-track {
   height: 4px;
   position: relative;
-  background: linear-gradient(
-    90deg,
-    #7d8c6f,
-    #647957 49%,
-    #a1bd83 51%,
-    #c5e69b
-  );
+  background: linear-gradient(90deg, #7d8c6f, #647957 49%, #a1bd83 51%, #c5e69b);
   border-radius: 2px;
   margin-top: 10px;
   opacity: 0.85;
@@ -833,7 +981,7 @@ button.icon-button:active {
   margin-top: 7px;
   align-items: center;
   justify-content: space-between;
-  font-size: 6px;
+  font-size: 8px;
   color: #8b9e7f;
   line-height: 9px;
 }
@@ -844,7 +992,7 @@ button.icon-button:active {
 }
 .heading-scale b {
   color: #d0ddc0;
-  font-size: 7px;
+  font-size: 9px;
   font-weight: 500;
 }
 .instrument-actions {
@@ -898,11 +1046,11 @@ button.icon-button:active {
   color: #dce8cf;
 }
 .flight-aside span {
-  font-size: 11px;
+  font-size: 13px;
   line-height: 1.3;
 }
 .flight-aside small {
-  font-size: 8px;
+  font-size: 10px;
   display: block;
   color: #b7c9aa;
   margin-top: 5px;
@@ -915,7 +1063,7 @@ button.icon-button:active {
   align-items: center;
   justify-content: space-between;
   background: #17211e;
-  font-size: 10px;
+  font-size: 12px;
   color: #acb8a8;
   z-index: 5;
   border-top: 1px solid var(--line);
@@ -931,17 +1079,17 @@ button.icon-button:active {
 .aircraft-label strong {
   font-weight: 550;
   color: #dbe4d3;
-  font-size: 10px;
+  font-size: 12px;
 }
 .aircraft-label > span {
-  font-size: 9px;
+  font-size: 11px;
   color: #83947d;
 }
 .flight-status {
   display: flex;
   align-items: center;
   gap: 10px;
-  font-size: 9px;
+  font-size: 11px;
   font-variant-numeric: tabular-nums;
 }
 .flight-status .status-dot {
@@ -954,13 +1102,22 @@ button.icon-button:active {
   border-radius: 50%;
   margin: 0 3px;
 }
+.footer-toggles {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.thermal-toggle:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
 .thermal-toggle {
   display: flex;
   align-items: center;
   gap: 8px;
   padding: 0;
   background: none;
-  font-size: 9px;
+  font-size: 11px;
   color: #b3c2a9;
 }
 .thermal-toggle > svg {
@@ -1025,13 +1182,13 @@ button.icon-button:active {
   margin: 0 0 10px;
 }
 .pause-overlay p {
-  font-size: 11px;
+  font-size: 13px;
   color: #b9c9ae;
   line-height: 1.7;
   margin: 0 0 20px;
 }
 .pause-overlay .primary-button {
-  font-size: 11px;
+  font-size: 13px;
   min-height: 38px;
   padding: 10px 18px;
 }
@@ -1042,7 +1199,7 @@ button.icon-button:active {
   display: flex;
   justify-content: center;
   gap: 20px;
-  font-size: 11px;
+  font-size: 13px;
   color: #d6e4c8;
   margin: 0 0 20px;
 }
@@ -1051,7 +1208,7 @@ button.icon-button:active {
   margin: 12px auto 0;
   background: none;
   color: #d4e2c6;
-  font-size: 11px;
+  font-size: 13px;
 }
 .flight-warning {
   position: absolute;
@@ -1063,7 +1220,7 @@ button.icon-button:active {
   border: 1px solid #c79e5e;
   border-radius: 7px;
   color: #f6d9a6;
-  font-size: 11px;
+  font-size: 13px;
   white-space: nowrap;
 }
 .cockpit-reticle {
@@ -1138,7 +1295,7 @@ button.icon-button:active {
   color: #f3f6e9;
 }
 .flight-modal > p {
-  font-size: 12px;
+  font-size: 14px;
   line-height: 1.8;
   color: #aebfa4;
   margin: 0 0 24px;
@@ -1157,7 +1314,7 @@ button.icon-button:active {
   justify-content: space-between;
   border-bottom: 1px solid var(--line);
   padding: 13px 0;
-  font-size: 10px;
+  font-size: 12px;
   color: #c0ceb5;
 }
 .control-table strong {
@@ -1188,12 +1345,12 @@ button.icon-button:active {
   flex-shrink: 0;
 }
 .flying-tip strong {
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 550;
   color: #dbead0;
 }
 .flying-tip p {
-  font-size: 11px;
+  font-size: 13px;
   line-height: 1.8;
   color: #aabf9d;
   margin: 7px 0 0;
@@ -1221,13 +1378,13 @@ button.icon-button:active {
   letter-spacing: -0.7px;
 }
 .log-stats span {
-  font-size: 10px;
+  font-size: 12px;
   color: #99ae8c;
 }
 .log-thermal {
   display: flex;
   justify-content: space-between;
-  font-size: 11px;
+  font-size: 13px;
   padding: 16px 0;
   color: #b5c6aa;
 }
@@ -1236,7 +1393,7 @@ button.icon-button:active {
   font-weight: 500;
 }
 .flight-modal > p.log-note {
-  font-size: 10px;
+  font-size: 12px;
   line-height: 1.8;
   margin: 10px 0 0;
 }
@@ -1258,7 +1415,7 @@ button.icon-button:active {
   top: 20px;
 }
 .map-modal-note {
-  font-size: 10px;
+  font-size: 12px;
   color: #adbf9f;
   line-height: 1.8;
   margin-top: 17px;
@@ -1285,7 +1442,7 @@ button.icon-button:active {
 }
 .render-error p {
   max-width: 400px;
-  font-size: 13px;
+  font-size: 15px;
   line-height: 1.7;
 }
 .end-overlay .modal-icon {
@@ -1308,7 +1465,7 @@ button.icon-button:active {
     font-size: 73px;
   }
   .flight-intro p {
-    font-size: 14px;
+    font-size: 16px;
   }
   .conditions {
     top: 36px;
@@ -1370,7 +1527,7 @@ button.icon-button:active {
     font-size: 54px;
   }
   .flight-intro p {
-    font-size: 12px;
+    font-size: 14px;
   }
   .conditions {
     right: 23px;
@@ -1432,7 +1589,7 @@ button.icon-button:active {
     padding: 0 11px;
   }
   .instrument-label {
-    font-size: 8px;
+    font-size: 10px;
     gap: 4px;
   }
   .instrument-label svg {
@@ -1443,7 +1600,7 @@ button.icon-button:active {
     letter-spacing: -1px;
   }
   .instrument-value > span {
-    font-size: 8px;
+    font-size: 10px;
     margin-left: 3px;
   }
   .instrument-actions {
@@ -1452,7 +1609,7 @@ button.icon-button:active {
   }
   .keyboard-hints {
     gap: 14px;
-    font-size: 8px;
+    font-size: 10px;
     flex-wrap: wrap;
   }
   .keyboard-hints > button {
@@ -1477,7 +1634,7 @@ button.icon-button:active {
     padding: 16px 14px 14px;
   }
   .conditions-details > div {
-    font-size: 9px;
+    font-size: 11px;
   }
   .flight-intro h1 {
     font-size: 49px;
@@ -1487,7 +1644,7 @@ button.icon-button:active {
     top: 32px;
   }
   .region-label {
-    font-size: 8px;
+    font-size: 10px;
     letter-spacing: 1.8px;
   }
   .scene-compass {
@@ -1505,10 +1662,10 @@ button.icon-button:active {
     gap: 8px;
   }
   .status-bar {
-    font-size: 9px;
+    font-size: 11px;
   }
   .instrument-caption {
-    font-size: 6px;
+    font-size: 8px;
   }
 }
 @media (max-width: 680px) {
@@ -1534,7 +1691,7 @@ button.icon-button:active {
     gap: 18px;
   }
   .main-nav button {
-    font-size: 10px;
+    font-size: 12px;
   }
   .header-right {
     margin: 0;
@@ -1558,7 +1715,7 @@ button.icon-button:active {
     max-width: 70%;
   }
   .region-label {
-    font-size: 7px;
+    font-size: 9px;
     margin-bottom: 12px;
     letter-spacing: 1.5px;
   }
@@ -1568,18 +1725,18 @@ button.icon-button:active {
     margin-bottom: 13px;
   }
   .flight-intro p {
-    font-size: 11px;
+    font-size: 13px;
     line-height: 1.8;
     margin-bottom: 20px;
   }
   .primary-button {
-    font-size: 11px;
+    font-size: 13px;
     gap: 24px;
     min-height: 40px;
     padding: 11px 16px;
   }
   .intro-note {
-    font-size: 8px;
+    font-size: 10px;
     margin-top: 10px;
   }
   .flight-intro.is-flying h1 {
@@ -1587,7 +1744,7 @@ button.icon-button:active {
   }
   .flight-intro.is-flying p {
     max-width: 200px;
-    font-size: 10px;
+    font-size: 12px;
   }
   .conditions {
     width: 140px;
@@ -1597,7 +1754,7 @@ button.icon-button:active {
     z-index: 4;
   }
   .conditions-heading {
-    font-size: 10px;
+    font-size: 12px;
     padding: 12px 11px;
     cursor: pointer;
     gap: 8px;
@@ -1629,10 +1786,10 @@ button.icon-button:active {
     right: 32px;
     transform: none;
     width: 105px;
-    font-size: 7px;
+    font-size: 9px;
   }
   .scene-compass b {
-    font-size: 9px;
+    font-size: 11px;
   }
   .thermal-indicator {
     top: 44%;
@@ -1641,10 +1798,10 @@ button.icon-button:active {
     gap: 6px;
   }
   .thermal-indicator strong {
-    font-size: 8px;
+    font-size: 10px;
   }
   .thermal-indicator > div > span {
-    font-size: 7px;
+    font-size: 9px;
     white-space: nowrap;
   }
   .thermal-symbol {
@@ -1666,7 +1823,7 @@ button.icon-button:active {
     background: rgba(27, 44, 33, 0.75);
   }
   .map-heading {
-    font-size: 8px;
+    font-size: 10px;
     left: 9px;
     right: 5px;
     top: 3px;
@@ -1684,7 +1841,7 @@ button.icon-button:active {
     width: 10px;
   }
   .map-north {
-    font-size: 7px;
+    font-size: 9px;
     right: 10px;
     top: 29px;
   }
@@ -1694,7 +1851,7 @@ button.icon-button:active {
   .map-scale {
     left: 9px;
     bottom: 8px;
-    font-size: 6px;
+    font-size: 8px;
     gap: 5px;
   }
   .map-scale > span {
@@ -1716,7 +1873,7 @@ button.icon-button:active {
     padding: 0 10px;
   }
   .instrument-label {
-    font-size: 7px;
+    font-size: 9px;
     gap: 3px;
   }
   .instrument-label svg {
@@ -1729,7 +1886,7 @@ button.icon-button:active {
     margin-top: 7px;
   }
   .instrument-value > span {
-    font-size: 7px;
+    font-size: 9px;
     display: block;
     margin: 3px 0 0;
     line-height: 1;
@@ -1776,10 +1933,10 @@ button.icon-button:active {
     width: 19px;
   }
   .aircraft-label strong {
-    font-size: 8px;
+    font-size: 10px;
   }
   .flight-status {
-    font-size: 8px;
+    font-size: 10px;
     gap: 7px;
   }
   .flight-status > span:nth-child(2) {
@@ -1795,7 +1952,7 @@ button.icon-button:active {
     display: none;
   }
   .thermal-toggle > span:first-of-type {
-    font-size: 8px;
+    font-size: 10px;
   }
   .toggle-track {
     width: 22px;
@@ -1857,14 +2014,14 @@ button.icon-button:active {
     font-size: 26px;
   }
   .pause-overlay p {
-    font-size: 10px;
+    font-size: 12px;
   }
   .end-overlay {
     width: 300px;
   }
   .flight-warning {
     top: 34%;
-    font-size: 9px;
+    font-size: 11px;
     white-space: normal;
     width: 230px;
     text-align: center;
@@ -1878,14 +2035,14 @@ button.icon-button:active {
     font-size: 30px;
   }
   .flight-modal > p {
-    font-size: 11px;
+    font-size: 13px;
   }
   .control-table > div {
-    font-size: 9px;
+    font-size: 11px;
   }
   .control-table kbd {
     min-width: 20px;
-    font-size: 9px;
+    font-size: 11px;
   }
   .modal-backdrop {
     padding: 18px;
@@ -1905,7 +2062,7 @@ button.icon-button:active {
   }
   .end-stats {
     gap: 15px;
-    font-size: 10px;
+    font-size: 12px;
   }
 }
 @media (max-height: 700px) and (min-width: 681px) {
@@ -1922,7 +2079,7 @@ button.icon-button:active {
     font-size: 49px;
   }
   .flight-intro p {
-    font-size: 11px;
+    font-size: 13px;
     margin-bottom: 16px;
   }
   .region-label {
@@ -1982,7 +2139,7 @@ button.icon-button:active {
     font-size: 39px;
   }
   .flight-intro p {
-    font-size: 10px;
+    font-size: 12px;
     margin-bottom: 13px;
   }
   .flight-intro {

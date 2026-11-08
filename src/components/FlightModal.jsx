@@ -1,16 +1,8 @@
 import { useEffect, useRef } from "react";
-import {
-  X,
-  ArrowUpRight,
-  Wind,
-  ArrowUp,
-  Compass,
-  Clock,
-  Mountain,
-  Route,
-} from "lucide-react";
+import { X, ArrowUpRight, Wind, ArrowUp, Compass, Clock, Mountain, Route } from "lucide-react";
 import { formatTime, WEATHER } from "../sim/physics";
 import FlightMap from "./FlightMap";
+import { gliderSpec } from "../sim/gliders";
 
 export default function FlightModal({ sim }) {
   const dialog = useRef(null);
@@ -23,9 +15,7 @@ export default function FlightModal({ sim }) {
         sim.closeModal();
       }
       if (event.key === "Tab") {
-        const focusable = dialog.current.querySelectorAll(
-          'button, [tabindex="0"]',
-        );
+        const focusable = dialog.current.querySelectorAll('button, [tabindex="0"]');
         const first = focusable[0],
           last = focusable[focusable.length - 1];
         if (event.shiftKey && document.activeElement === first) {
@@ -73,8 +63,7 @@ export default function FlightModal({ sim }) {
             </span>
             <h2 id="modal-title">A feel for the air.</h2>
             <p>
-              There’s no engine here. Trade altitude for speed, then find rising
-              air to climb again.
+              There’s no engine here. Trade altitude for speed, then find rising air to climb again.
             </p>
             <div className="control-table">
               <div>
@@ -99,15 +88,18 @@ export default function FlightModal({ sim }) {
                 </span>
                 <strong>Camera / thermals / restart</strong>
               </div>
+              <div>
+                <kbd>P</kbd>
+                <strong>AI pilot (steer to take over)</strong>
+              </div>
             </div>
             <div className="flying-tip">
               <ArrowUp size={20} />
               <div>
                 <strong>Circle to climb.</strong>
                 <p>
-                  Pale green particles mark thermals. Fly into a column and hold
-                  a gentle bank to stay in the rising air. Watch the vertical
-                  speed turn positive.
+                  Pale green particles mark thermals. Fly into a column and hold a gentle bank to
+                  stay in the rising air. Watch the vertical speed turn positive.
                 </p>
               </div>
             </div>
@@ -122,7 +114,10 @@ export default function FlightModal({ sim }) {
               <Route size={25} />
             </span>
             <h2 id="modal-title">Your time in the sky.</h2>
-            <p>Julian Alps · {WEATHER[sim.settings.weather].label} · LS8-18</p>
+            <p>
+              Julian Alps · {WEATHER[sim.settings.weather].label} ·{" "}
+              {gliderSpec(sim.settings.glider).name}
+            </p>
             <div className="log-stats">
               {[
                 {
@@ -171,14 +166,10 @@ export default function FlightModal({ sim }) {
           <>
             <h2 id="modal-title">Room to roam.</h2>
             <p>Your flight path through the Julian Alps.</p>
-            <FlightMap
-              state={state}
-              thermals={sim.settings.thermals}
-              expanded
-            />
+            <FlightMap state={state} thermals={sim.settings.thermals} expanded />
             <div className="map-modal-note">
-              <span className="status-dot" /> Pale green rings mark rising air.
-              Your trail shows where you’ve been.
+              <span className="status-dot" /> Pale green rings mark rising air. Your trail shows
+              where you’ve been.
             </div>
           </>
         )}

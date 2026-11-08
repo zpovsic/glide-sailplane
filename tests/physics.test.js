@@ -12,8 +12,7 @@ import {
 const neutral = { left: false, right: false, up: false, down: false };
 const calm = { weather: "sunny", wind: 0 };
 function fly(state, seconds, input = neutral, settings = calm) {
-  for (let i = 0; i < seconds * 60; i++)
-    stepFlight(state, input, settings, 1 / 60);
+  for (let i = 0; i < seconds * 60; i++) stepFlight(state, input, settings, 1 / 60);
   return state;
 }
 function airborne() {
@@ -60,13 +59,7 @@ test("pitch trades airspeed for altitude and aggressive climb can stall", () => 
 test("thermal core lifts the glider and weakens above cloud base", () => {
   const thermal = THERMALS[0];
   const core = thermalLift(thermal.x, thermal.z, 1840, 0, WEATHER.sunny);
-  const outside = thermalLift(
-    thermal.x + 800,
-    thermal.z,
-    1840,
-    0,
-    WEATHER.sunny,
-  );
+  const outside = thermalLift(thermal.x + 800, thermal.z, 1840, 0, WEATHER.sunny);
   const above = thermalLift(thermal.x, thermal.z, 3200, 0, WEATHER.sunny);
   assert.ok(core > 3);
   assert.ok(outside < core / 4);
@@ -97,6 +90,20 @@ test("terrain collision ends flight and cannot run below the surface", () => {
   fly(state, 10);
   assert.equal(state.time, elapsed);
   assert.ok(state.altitude >= terrainHeight(state.x, state.z));
+});
+test("glider choice changes glide performance and handling", () => {
+  const glide = (glider) => {
+    const state = airborne();
+    state.z = 7000;
+    state.altitude = 4200;
+    return fly(state, 60, neutral, { ...calm, glider });
+  };
+  const trainer = glide("ask21"),
+    open = glide("nimbus4");
+  assert.ok(open.altitude > trainer.altitude + 10);
+  const roll = (glider) =>
+    fly(airborne(), 0.5, { ...neutral, right: true }, { ...calm, glider }).bank;
+  assert.ok(roll("ask21") > roll("nimbus4"));
 });
 test("world boundary ends flight and a fresh flight clears the log", () => {
   const state = airborne();

@@ -1,3 +1,5 @@
+import { gliderSpec } from "./gliders.js";
+
 export const WEATHER = {
   sunny: {
     label: "Fair weather",
@@ -77,14 +79,9 @@ export function terrainHeight(x, z) {
     amp *= 0.51;
     freq *= 2.05;
   }
-  const ridge = Math.pow(
-    1 - Math.abs(noise(x / 4700 + 2, z / 3500) * 2 - 1),
-    2,
-  );
+  const ridge = Math.pow(1 - Math.abs(noise(x / 4700 + 2, z / 3500) * 2 - 1), 2);
   const base = 300 + (Math.sin(z / 8000) + 1) * 90;
-  return (
-    base + valley * (850 + ridge * 1550 + (detail / total) * 1650) + detail * 90
-  );
+  return base + valley * (850 + ridge * 1550 + (detail / total) * 1650) + detail * 90;
 }
 
 export function createFlight() {
@@ -116,15 +113,9 @@ export function thermalLift(x, z, altitude, time, weather) {
     const dx = x - thermal.x - Math.sin(time / 120) * 60;
     const dz = z - thermal.z;
     const r2 = (dx * dx + dz * dz) / (thermal.radius * thermal.radius);
-    const heightFactor = clamp(
-      (weather.cloudBase + 250 - altitude) / 450,
-      0,
-      1,
-    );
-    lift +=
-      weather.thermal * thermal.strength * Math.exp(-r2 * 1.5) * heightFactor;
-    lift -=
-      0.25 * Math.exp(-Math.pow(Math.sqrt(r2) - 1.8, 2) * 3) * heightFactor;
+    const heightFactor = clamp((weather.cloudBase + 250 - altitude) / 450, 0, 1);
+    lift += weather.thermal * thermal.strength * Math.exp(-r2 * 1.5) * heightFactor;
+    lift -= 0.25 * Math.exp(-Math.pow(Math.sqrt(r2) - 1.8, 2) * 3) * heightFactor;
   }
   return lift;
 }
@@ -132,38 +123,27 @@ export function thermalLift(x, z, altitude, time, weather) {
 export function stepFlight(state, input, settings, dt) {
   if (state.status !== "flying") return state;
   const weather = WEATHER[settings.weather];
+  const glider = gliderSpec(settings.glider);
   const bankInput = Number(input.right) - Number(input.left);
   const pitchInput = Number(input.down) - Number(input.up);
-  state.bank = mix(state.bank, bankInput * 0.78, Math.min(1, dt * 2.4));
+  state.bank = mix(state.bank, bankInput * glider.maxBank, Math.min(1, dt * glider.rollRate));
   state.pitch = mix(state.pitch, pitchInput * 0.15, Math.min(1, dt * 1.6));
-  const gust =
-    (Math.sin(state.time * 1.7) + Math.sin(state.time * 3.1) * 0.4) *
-    weather.turbulence;
-  state.heading +=
-    ((9.81 * Math.tan(state.bank)) / Math.max(15, state.speed) + gust * 0.006) *
-    dt;
+  const gust = (Math.sin(state.time * 1.7) + Math.sin(state.time * 3.1) * 0.4) * weather.turbulence;
+  state.heading += ((9.81 * Math.tan(state.bank)) / Math.max(15, state.speed) + gust * 0.006) * dt;
   state.heading = (state.heading + Math.PI * 2) % (Math.PI * 2);
   state.speed = clamp(
-    state.speed + (-state.pitch * 9.81 + (26.1 - state.speed) * 0.055) * dt,
+    state.speed + (-state.pitch * 9.81 + (glider.trimSpeed - state.speed) * 0.055) * dt,
     14,
     64,
   );
-  state.stalled = state.speed < 18.5;
+  state.stalled = state.speed < glider.stallSpeed;
   const sink =
-    0.66 +
-    0.0038 * Math.pow(state.speed - 25, 2) +
-    Math.pow(Math.abs(state.bank), 2) * 1.7;
-  state.lift = thermalLift(
-    state.x,
-    state.z,
-    state.altitude,
-    state.time,
-    weather,
-  );
+    glider.sinkBase +
+    glider.sinkCurve * Math.pow(state.speed - glider.bestSpeed, 2) +
+    Math.pow(Math.abs(state.bank), 2) * glider.turnSink;
+  state.lift = thermalLift(state.x, state.z, state.altitude, state.time, weather);
   const slopeX =
-    (terrainHeight(state.x + 60, state.z) -
-      terrainHeight(state.x - 60, state.z)) /
-    120;
+    (terrainHeight(state.x + 60, state.z) - terrainHeight(state.x - 60, state.z)) / 120;
   const ridgeLift =
     clamp((slopeX * settings.wind) / 12, -1.8, 1.8) *
     clamp(1 - (state.altitude - terrainHeight(state.x, state.z)) / 700, 0, 1);
@@ -174,11 +154,7 @@ export function stepFlight(state, input, settings, dt) {
     state.pitch * state.speed +
     gust * 0.4 -
     (state.stalled ? 4 : 0);
-  state.verticalSpeed = mix(
-    state.verticalSpeed,
-    targetVario,
-    Math.min(1, dt * 2),
-  );
+  state.verticalSpeed = mix(state.verticalSpeed, targetVario, Math.min(1, dt * 2));
   state.altitude += state.verticalSpeed * dt;
   // Wind is from the northwest: the air mass drifts southeast.
   const drift = settings.wind / 3.6 / Math.sqrt(2);
@@ -201,8 +177,7 @@ export function stepFlight(state, input, settings, dt) {
     state.altitude = terrainHeight(state.x, state.z) + 5;
     state.status = "landed";
   }
-  if (Math.abs(state.x) > 19000 || Math.abs(state.z) > 19000)
-    state.status = "boundary";
+  if (Math.abs(state.x) > 19000 || Math.abs(state.z) > 19000) state.status = "boundary";
   return state;
 }
 

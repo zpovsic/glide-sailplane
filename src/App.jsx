@@ -11,6 +11,7 @@ import {
   CloudSun,
   Pause,
   RotateCcw,
+  Bot,
 } from "lucide-react";
 import { useFlight } from "./hooks/useFlight";
 import { useFlightAudio } from "./hooks/useFlightAudio";
@@ -19,6 +20,8 @@ import Conditions from "./components/Conditions";
 import FlightMap from "./components/FlightMap";
 import Instruments, { TouchControls } from "./components/Instruments";
 import FlightModal from "./components/FlightModal";
+import GliderPicker from "./components/GliderPicker";
+import { gliderSpec } from "./sim/gliders";
 import { formatTime, WEATHER, terrainHeight, THERMALS } from "./sim/physics";
 
 function GliderMark({ small = false }) {
@@ -47,11 +50,10 @@ export default function App() {
   const [sound, setSound] = useState(false);
   useFlightAudio(sound, state);
   const weather = WEATHER[sim.settings.weather];
+  const glider = gliderSpec(sim.settings.glider);
   const terminal = ["landed", "boundary"].includes(state.status);
   const clearance = state.altitude - terrainHeight(state.x, state.z);
-  const nearestThermal = Math.min(
-    ...THERMALS.map((t) => Math.hypot(state.x - t.x, state.z - t.z)),
-  );
+  const nearestThermal = Math.min(...THERMALS.map((t) => Math.hypot(state.x - t.x, state.z - t.z)));
   return (
     <div className="app-shell">
       <header className="app-header">
@@ -119,9 +121,7 @@ export default function App() {
         <FlightScene sim={sim} />
         <div className="scene-vignette" />
         <div className="scene-top-shade" />
-        <section
-          className={`flight-intro ${state.status !== "ready" ? "is-flying" : ""}`}
-        >
+        <section className={`flight-intro ${state.status !== "ready" ? "is-flying" : ""}`}>
           {state.status === "ready" ? (
             <>
               <h1>Find your lift.</h1>
@@ -187,19 +187,15 @@ export default function App() {
           <div />
         </div>
 
-        {sim.settings.thermals && !terminal && (
-          <div
-            className={`thermal-indicator ${state.lift > 0.8 ? "in-thermal" : ""}`}
-          >
+        {sim.settings.thermals && !terminal && state.status !== "ready" && (
+          <div className={`thermal-indicator ${state.lift > 0.8 ? "in-thermal" : ""}`}>
             <span className="thermal-symbol">
               <ArrowUp size={17} />
               <i />
               <i />
             </span>
             <div>
-              <strong>
-                {state.lift > 0.8 ? "Rising air" : "Lift is out there"}
-              </strong>
+              <strong>{state.lift > 0.8 ? "Rising air" : "Lift is out there"}</strong>
               <span>
                 {state.lift > 0.8
                   ? `+${state.lift.toFixed(1)} m/s thermal`
@@ -232,11 +228,7 @@ export default function App() {
             <span className="modal-icon">
               <GliderMark />
             </span>
-            <h2>
-              {state.status === "boundary"
-                ? "A whole sky behind you."
-                : "Back to earth."}
-            </h2>
+            <h2>{state.status === "boundary" ? "A whole sky behind you." : "Back to earth."}</h2>
             <p>
               {state.status === "boundary"
                 ? "You reached the edge of this alpine playground."
@@ -249,10 +241,7 @@ export default function App() {
             <button className="primary-button" onClick={sim.restart}>
               Fly again <RotateCcw size={17} />
             </button>
-            <button
-              className="text-button"
-              onClick={() => sim.openModal("log")}
-            >
+            <button className="text-button" onClick={() => sim.openModal("log")}>
               View flight log
             </button>
           </div>
@@ -265,7 +254,13 @@ export default function App() {
           </div>
         )}
 
-        <div className="bottom-layout">
+        {state.status === "ready" && (
+          <GliderPicker
+            value={glider.id}
+            onChange={(id) => sim.setSettings((value) => ({ ...value, glider: id }))}
+          />
+        )}
+        <div className={`bottom-layout ${state.status === "ready" ? "is-hidden" : ""}`}>
           <FlightMap
             state={state}
             thermals={sim.settings.thermals}
@@ -301,18 +296,20 @@ export default function App() {
       <footer className="status-bar">
         <div className="aircraft-label">
           <GliderMark small />
-          <strong>LS8-18</strong>
-          <span>18 m wingspan</span>
+          <strong>{glider.name}</strong>
+          <span>{glider.span} m wingspan</span>
         </div>
         <div className="flight-status">
-          <span
-            className={`status-dot ${state.status === "paused" ? "amber" : ""}`}
-          />
+          <span className={`status-dot ${state.status === "paused" ? "amber" : ""}`} />
           <span>
             {state.status === "ready"
               ? "Ready for takeoff"
               : state.status === "flying"
-                ? "In flight"
+                ? sim.autopilot
+                  ? sim.pilot.current.mode === "climb"
+                    ? "AI pilot · circling in a thermal"
+                    : "AI pilot · gliding to the next thermal"
+                  : "In flight"
                 : state.status === "paused"
                   ? "Paused"
                   : "Flight complete"}
@@ -322,20 +319,38 @@ export default function App() {
           <i />
           <span>{(state.distance / 1000).toFixed(1)} km</span>
         </div>
-        <button
-          className={`thermal-toggle ${sim.settings.thermals ? "on" : ""}`}
-          onClick={(event) => {
-            sim.toggleThermals();
-            event.currentTarget.blur();
-          }}
-          aria-pressed={sim.settings.thermals}
-        >
-          <Eye size={14} />
-          <span>Show thermals</span>
-          <span className="toggle-track">
-            <i />
-          </span>
-        </button>
+        <div className="footer-toggles">
+          <button
+            className={`thermal-toggle ${sim.autopilot ? "on" : ""}`}
+            onClick={(event) => {
+              sim.toggleAutopilot();
+              event.currentTarget.blur();
+            }}
+            aria-pressed={sim.autopilot}
+            title="Let the AI fly (P). Steer to take over."
+            disabled={terminal}
+          >
+            <Bot size={14} />
+            <span>AI pilot</span>
+            <span className="toggle-track">
+              <i />
+            </span>
+          </button>
+          <button
+            className={`thermal-toggle ${sim.settings.thermals ? "on" : ""}`}
+            onClick={(event) => {
+              sim.toggleThermals();
+              event.currentTarget.blur();
+            }}
+            aria-pressed={sim.settings.thermals}
+          >
+            <Eye size={14} />
+            <span>Show thermals</span>
+            <span className="toggle-track">
+              <i />
+            </span>
+          </button>
+        </div>
       </footer>
       {sim.modal && <FlightModal sim={sim} />}
     </div>

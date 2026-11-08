@@ -2,6 +2,8 @@
 
 A flyable sailplane simulation in a fictionalized Julian Alps landscape. Built with React, Vite, and Three.js.
 
+Requires Node.js 20.19+ (20.x), or Node.js 22.12+ and newer, as required by Vite 7.
+
 ```sh
 npm install
 npm run dev
@@ -11,12 +13,15 @@ Open the local URL printed by Vite. A browser with WebGL support is required.
 
 ## Flying
 
+Before takeoff, choose a glider: the **ASK 21** trainer rolls quickly and stalls late but sinks faster, the **LS8-18** is the balanced default, and the **Nimbus-4** glides furthest but turns slowly and needs more speed. Restart to pick again.
+
 - **← / →** or **A / D**: bank left / right.
 - **↑ / ↓** or **W / S**: nose down / up. Climbing trades airspeed for altitude.
 - **Space**: pause or resume.
 - **C**: switch between chase and cockpit cameras.
 - **T**: show or hide thermal particles and map markers.
 - **R**: reset the flight.
+- **P**: let the AI pilot fly. It glides to the nearest thermal, circles to climb toward cloud base, then moves on while steering clear of terrain. Any steering input hands control back to you.
 - Touch controls appear on narrow screens.
 
 Fly into the pale green thermal columns, then circle to stay in the rising air. The vertical-speed instrument shows whether you are climbing. Weather presets change thermal strength, cloud base, visibility, lighting and turbulence. The wind slider changes drift over the ground; airspeed is measured relative to the moving air. Opening a dialog or leaving the browser pauses the flight.

@@ -1,6 +1,7 @@
 import * as THREE from "three";
 import { mergeGeometries } from "three/addons/utils/BufferGeometryUtils.js";
 import { terrainHeight, valleyCenter, noise, THERMALS } from "./physics";
+import { gliderSpec } from "./gliders";
 
 const seeded = (n) => {
   const v = Math.sin(n * 127.31) * 43758.5453;
@@ -30,12 +31,9 @@ function makeTerrain() {
         terrainHeight(x + 35, z) - terrainHeight(x - 35, z),
         terrainHeight(x, z + 35) - terrainHeight(x, z - 35),
       ) / 70;
-    if (height > 1600)
-      color.lerp(rock, Math.min(0.75, Math.max(0, slope - 0.4) * 0.8));
-    const snowline =
-      2380 + noise(x / 600, z / 600) * 400 + Math.min(1.1, slope) * 160;
-    if (height > snowline)
-      color.lerp(snow, Math.min(1, (height - snowline) / 200));
+    if (height > 1600) color.lerp(rock, Math.min(0.75, Math.max(0, slope - 0.4) * 0.8));
+    const snowline = 2380 + noise(x / 600, z / 600) * 400 + Math.min(1.1, slope) * 160;
+    if (height > snowline) color.lerp(snow, Math.min(1, (height - snowline) / 200));
     color.multiplyScalar(0.76 + noise(x / 75, z / 75) * 0.4);
     colors.push(color.r, color.g, color.b);
   }
@@ -86,11 +84,7 @@ function makeForest() {
     const x = (seeded(i * 3 + 1) - 0.5) * 29000,
       z = (seeded(i * 3 + 2) - 0.65) * 31000;
     const height = terrainHeight(x, z);
-    if (
-      height > 1700 ||
-      Math.abs(x - valleyCenter(z)) < 70 ||
-      noise(x / 700, z / 700) < 0.29
-    )
+    if (height > 1700 || Math.abs(x - valleyCenter(z)) < 70 || noise(x / 700, z / 700) < 0.29)
       continue;
     trees.push({ x, z, y: height, scale: 7 + seeded(i * 3 + 3) * 10 });
   }
@@ -171,8 +165,9 @@ function makeClouds(scene) {
   return clouds;
 }
 
-function makeGlider() {
+function makeGlider(spec) {
   const group = new THREE.Group();
+  const span = spec.span / 18;
   const white = new THREE.MeshStandardMaterial({
     color: "#fafbf2",
     metalness: 0.15,
@@ -191,16 +186,16 @@ function makeGlider() {
   fuselage.scale.set(0.36, 0.42, 3.5);
   group.add(fuselage);
   const canopy = new THREE.Mesh(new THREE.SphereGeometry(1, 24, 16), charcoal);
-  canopy.scale.set(0.31, 0.34, 1.12);
-  canopy.position.set(0, 0.27, -1.52);
+  canopy.scale.set(0.31, 0.34, spec.canopyLength);
+  canopy.position.set(0, 0.27, -1.52 + (spec.canopyLength - 1.12) * 0.35);
   group.add(canopy);
   const makeWing = (side) => {
     const shape = new THREE.Shape();
     shape.moveTo(0, -0.65);
     shape.lineTo(side * 2.4, -0.55);
-    shape.lineTo(side * 8.7, 0.0);
-    shape.lineTo(side * 9.25, 0.25);
-    shape.lineTo(side * 9.2, 0.6);
+    shape.lineTo(side * 8.7 * span, 0.0);
+    shape.lineTo(side * 9.25 * span, 0.25);
+    shape.lineTo(side * 9.2 * span, 0.6);
     shape.lineTo(side * 2.4, 0.65);
     shape.lineTo(0, 0.78);
     shape.closePath();
@@ -216,15 +211,17 @@ function makeGlider() {
     const wing = new THREE.Mesh(geo, white);
     wing.position.set(0, 0.17, -0.3);
     group.add(wing);
-    const tip = new THREE.Mesh(new THREE.BoxGeometry(0.075, 0.55, 0.4), accent);
-    tip.position.set(side * 9.15, 0.4, 0.08);
-    tip.rotation.z = -side * 0.3;
+    const tip = spec.winglets
+      ? new THREE.Mesh(new THREE.BoxGeometry(0.075, 0.55, 0.4), accent)
+      : new THREE.Mesh(new THREE.BoxGeometry(0.4, 0.06, 0.45), accent);
+    tip.position.set(side * 9.15 * span, spec.winglets ? 0.4 : 0.17, 0.08);
+    if (spec.winglets) tip.rotation.z = -side * 0.3;
     group.add(tip);
     const line = new THREE.Mesh(
-      new THREE.BoxGeometry(6.3, 0.009, 0.015),
+      new THREE.BoxGeometry(6.3 * span, 0.009, 0.015),
       new THREE.MeshBasicMaterial({ color: "#9ca7a1" }),
     );
-    line.position.set(side * 5.1, 0.27, 0.2);
+    line.position.set(side * 5.1 * span, 0.27, 0.2);
     group.add(line);
   };
   makeWing(-1);
@@ -247,10 +244,7 @@ function makeGlider() {
   fin.position.set(0, 0.05, 2.15);
   group.add(fin);
   // A small, physically attached registration stripe on the tail.
-  const stripe = new THREE.Mesh(
-    new THREE.BoxGeometry(0.078, 0.18, 0.58),
-    accent,
-  );
+  const stripe = new THREE.Mesh(new THREE.BoxGeometry(0.078, 0.18, 0.58), accent);
   stripe.position.set(0, 0.82, 2.68);
   group.add(stripe);
   return group;
@@ -300,10 +294,7 @@ function makeThermals(scene) {
     }
   });
   const geometry = new THREE.BufferGeometry();
-  geometry.setAttribute(
-    "position",
-    new THREE.Float32BufferAttribute(positions, 3),
-  );
+  geometry.setAttribute("position", new THREE.Float32BufferAttribute(positions, 3));
   const points = new THREE.Points(
     geometry,
     new THREE.PointsMaterial({
@@ -333,10 +324,7 @@ export function createWorld(container) {
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
   renderer.toneMappingExposure = 1.0;
   container.appendChild(renderer.domElement);
-  renderer.domElement.setAttribute(
-    "aria-label",
-    "Live 3D sailplane flying above an alpine valley",
-  );
+  renderer.domElement.setAttribute("aria-label", "Live 3D sailplane flying above an alpine valley");
   const skyUniforms = {
     topColor: { value: new THREE.Color("#528fa9") },
     bottomColor: { value: new THREE.Color("#b8ced0") },
@@ -364,9 +352,9 @@ export function createWorld(container) {
   scene.add(makeTerrain());
   scene.add(makeRiver());
   scene.add(makeForest());
-  const clouds = makeClouds(scene),
-    glider = makeGlider();
-  scene.add(glider);
+  const clouds = makeClouds(scene);
+  let gliderId = null,
+    glider = null;
   const thermals = makeThermals(scene);
   const rainGeo = new THREE.BufferGeometry();
   const rainPos = new Float32Array(900 * 3);
@@ -402,20 +390,15 @@ export function createWorld(container) {
       if (settings.weather !== previousWeather) {
         const storm = settings.weather === "storm",
           cloudy = settings.weather === "cloudy";
-        skyUniforms.topColor.value.set(
-          storm ? "#455c6b" : cloudy ? "#8da6af" : "#528fa9",
-        );
-        skyUniforms.bottomColor.value.set(
-          storm ? "#9aa9a7" : cloudy ? "#d2d8d0" : "#b8ced0",
-        );
+        skyUniforms.topColor.value.set(storm ? "#455c6b" : cloudy ? "#8da6af" : "#528fa9");
+        skyUniforms.bottomColor.value.set(storm ? "#9aa9a7" : cloudy ? "#d2d8d0" : "#b8ced0");
         scene.fog.color.set(storm ? "#7f9499" : cloudy ? "#b5c5c3" : "#b9cdca");
         scene.fog.density = storm ? 0.00014 : cloudy ? 0.000075 : 0.000045;
         sun.intensity = storm ? 0.65 : cloudy ? 1.5 : 2.5;
         hemi.intensity = storm ? 1.1 : 1.6;
         clouds.children.forEach((cloud, i) => {
           cloud.visible = !(!storm && !cloudy && i % 3 === 0);
-          cloud.position.y =
-            cloud.userData.baseY - (storm ? 1000 : cloudy ? 500 : 0);
+          cloud.position.y = cloud.userData.baseY - (storm ? 1000 : cloudy ? 500 : 0);
           cloud.children.forEach((sprite) => {
             sprite.material.color.set(storm ? "#9eabb3" : "#ffffff");
             sprite.material.opacity = storm ? 0.82 : cloudy ? 0.76 : 0.62;
@@ -423,6 +406,18 @@ export function createWorld(container) {
         });
         rain.visible = storm;
         previousWeather = settings.weather;
+      }
+      if (settings.glider !== gliderId) {
+        if (glider) {
+          scene.remove(glider);
+          glider.traverse((child) => {
+            child.geometry?.dispose();
+            child.material?.dispose();
+          });
+        }
+        glider = makeGlider(gliderSpec(settings.glider));
+        scene.add(glider);
+        gliderId = settings.glider;
       }
       glider.position.set(state.x, state.altitude, state.z);
       glider.rotation.set(state.pitch, -state.heading, -state.bank, "YXZ");
@@ -456,17 +451,10 @@ export function createWorld(container) {
           state.altitude + 7.6,
           state.z - forwardZ * chaseDistance,
         );
-        targetLook.set(
-          state.x + forwardX * 85,
-          state.altitude - 11,
-          state.z + forwardZ * 85,
-        );
+        targetLook.set(state.x + forwardX * 85, state.altitude - 11, state.z + forwardZ * 85);
         camera.up.set(0, 1, 0);
       }
-      camera.position.lerp(
-        targetPosition,
-        firstFrame ? 1 : Math.min(1, dt * 5),
-      );
+      camera.position.lerp(targetPosition, firstFrame ? 1 : Math.min(1, dt * 5));
       camera.lookAt(targetLook);
       firstFrame = false;
       sky.position.copy(camera.position);
@@ -478,8 +466,7 @@ export function createWorld(container) {
           positions.setXYZ(
             i,
             origin.thermal.x + Math.cos(origin.angle + clock * 0.14) * origin.r,
-            origin.floor +
-              ((phase + clock * 0.025) % 1) * (2700 - origin.floor),
+            origin.floor + ((phase + clock * 0.025) % 1) * (2700 - origin.floor),
             origin.thermal.z + Math.sin(origin.angle + clock * 0.14) * origin.r,
           );
         });
@@ -502,12 +489,10 @@ export function createWorld(container) {
       scene.traverse((obj) => {
         if (obj.geometry) geometries.add(obj.geometry);
         if (obj.material)
-          (Array.isArray(obj.material) ? obj.material : [obj.material]).forEach(
-            (mat) => {
-              materials.add(mat);
-              if (mat.map) textures.add(mat.map);
-            },
-          );
+          (Array.isArray(obj.material) ? obj.material : [obj.material]).forEach((mat) => {
+            materials.add(mat);
+            if (mat.map) textures.add(mat.map);
+          });
       });
       geometries.forEach((geo) => geo.dispose());
       materials.forEach((mat) => mat.dispose());
