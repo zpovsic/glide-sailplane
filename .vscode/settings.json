@@ -1,37 +1,36 @@
 {
-	"files.autoSave": "afterDelay",
-	"window.zoomLevel": 0.5,
-	"editor.formatOnSave": true,
-	"editor.formatOnPaste": true,
-	"editor.fontSize": 15,
-	"editor.fontFamily": "Consolas",
-	"editor.fontLigatures": true,
-	"editor.fontWeight": "400",
-	"editor.lineHeight": 1.2,
-	"editor.codeLensFontFamily": "Consolas",
-	"terminal.integrated.fontSize": 14,
-	"terminal.integrated.fontFamily": "Consolas",
-	"terminal.integrated.fontWeight": "400",
-	"[Log]": {
-		"editor.fontSize": 14
-	},
-	"npm.packageManager": "pnpm",
-	"npm-intellisense.packageSubfoldersIntellisense": true,
+  "files.autoSave": "afterDelay",
+  "window.zoomLevel": 0.5,
+  "editor.formatOnSave": true,
+  "editor.formatOnPaste": true,
+  "editor.fontSize": 15,
+  "editor.fontFamily": "Consolas",
+  "editor.fontLigatures": true,
+  "editor.fontWeight": "400",
+  "editor.lineHeight": 1.2,
+  "editor.codeLensFontFamily": "Consolas",
+  "terminal.integrated.fontSize": 14,
+  "terminal.integrated.fontFamily": "Consolas",
+  "terminal.integrated.fontWeight": "400",
+  "[Log]": {
+    "editor.fontSize": 14
+  },
+  "npm.packageManager": "pnpm",
+  "npm-intellisense.packageSubfoldersIntellisense": true,
 
-	"[markdown]":{
-	"editor.wordWrap":"bounded",
-	"editor.wordWrapColumn":80,
-	"editor.quickSuggestions":{
-		"comments": "off",
-		"strings": "off",
-		"other": "off"
-	}
-	},
+  "[markdown]": {
+    "editor.wordWrap": "bounded",
+    "editor.wordWrapColumn": 80,
+    "editor.quickSuggestions": {
+      "comments": "off",
+      "strings": "off",
+      "other": "off"
+    }
+  },
 
-	"[svelte]":{
-	"editor.defaultFormatter":"svelte.svelte-vscode"
-	},
-
+  "[svelte]": {
+    "editor.defaultFormatter": "svelte.svelte-vscode"
+  },
 
   "[python]": {
     "editor.formatOnSave": true,
@@ -40,6 +39,24 @@
       "source.organizeImports": "explicit"
     },
     "editor.defaultFormatter": "charliermarsh.ruff"
+  },
+  "editor.defaultFormatter": "oxc.oxc-vscode",
+  "[javascript]": {
+    "editor.defaultFormatter": "oxc.oxc-vscode"
+  },
+  "[javascriptreact]": {
+    "editor.defaultFormatter": "oxc.oxc-vscode"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "oxc.oxc-vscode"
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "oxc.oxc-vscode"
+  },
+  "oxc.disableNestedConfig": true,
+  "oxc.fmt.disableNestedConfig": true,
+  "editor.formatOnSaveMode": "file",
+  "editor.codeActionsOnSave": {
+    "source.fixAll.oxc": "explicit"
   }
-
 }
