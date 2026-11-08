@@ -454,7 +454,10 @@ export function createWorld(container) {
         targetLook.set(state.x + forwardX * 85, state.altitude - 11, state.z + forwardZ * 85);
         camera.up.set(0, 1, 0);
       }
-      camera.position.lerp(targetPosition, firstFrame ? 1 : Math.min(1, dt * 5));
+      camera.position.lerp(
+        targetPosition,
+        firstFrame ? 1 : Math.min(1, dt * 5 * (settings.timeScale ?? 1)),
+      );
       camera.lookAt(targetLook);
       firstFrame = false;
       sky.position.copy(camera.position);

@@ -16,6 +16,7 @@ export function useFlight() {
     wind: 12,
     thermals: true,
     glider: DEFAULT_GLIDER,
+    timeScale: 1,
   });
   const settingsRef = useRef(settings);
   const [camera, setCamera] = useState("chase");

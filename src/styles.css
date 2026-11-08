@@ -389,7 +389,8 @@ button.icon-button:active {
   color: #a9b8a6;
   font-weight: 400;
 }
-.conditions input[type="range"] {
+.conditions input[type="range"],
+.time-scale input[type="range"] {
   appearance: none;
   width: 100%;
   height: 3px;
@@ -403,7 +404,8 @@ button.icon-button:active {
   cursor: pointer;
   margin: 7px 0 8px;
 }
-.conditions input[type="range"]::-webkit-slider-thumb {
+.conditions input[type="range"]::-webkit-slider-thumb,
+.time-scale input[type="range"]::-webkit-slider-thumb {
   appearance: none;
   background: var(--lime);
   height: 10px;
@@ -412,7 +414,8 @@ button.icon-button:active {
   border-radius: 50%;
   box-shadow: 0 0 0 3px rgba(217, 245, 166, 0.08);
 }
-.conditions input[type="range"]::-moz-range-thumb {
+.conditions input[type="range"]::-moz-range-thumb,
+.time-scale input[type="range"]::-moz-range-thumb {
   background: var(--lime);
   height: 9px;
   width: 9px;
@@ -1108,6 +1111,38 @@ button.icon-button:active {
   display: flex;
   align-items: center;
   gap: 20px;
+}
+.time-scale {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  color: #b3c2a9;
+}
+.time-scale label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.time-scale input[type="range"] {
+  width: 76px;
+  margin: 0;
+}
+.time-scale output {
+  min-width: 22px;
+  color: #dbe4d3;
+  font-variant-numeric: tabular-nums;
+}
+@media (max-width: 680px) {
+  .footer-toggles {
+    gap: 12px;
+  }
+  .time-scale label {
+    display: none;
+  }
+  .time-scale input[type="range"] {
+    width: 54px;
+  }
 }
 .thermal-toggle:disabled {
   opacity: 0.45;

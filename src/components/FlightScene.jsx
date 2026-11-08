@@ -24,7 +24,7 @@ export default function FlightScene({ sim }) {
       const dt = Math.min((now - previous) / 1000, 0.1);
       previous = now;
       clock += dt;
-      accumulator += dt;
+      accumulator += dt * latest.current.settings.timeScale;
       publishTimer += dt;
       while (accumulator >= 1 / 60) {
         latest.current.tick(1 / 60);
@@ -55,13 +55,10 @@ export default function FlightScene({ sim }) {
         <div className="render-error">
           <h2>A little turbulence.</h2>
           <p>
-            This simulation needs WebGL. Enable hardware acceleration in your
-            browser and reload to fly.
+            This simulation needs WebGL. Enable hardware acceleration in your browser and reload to
+            fly.
           </p>
-          <button
-            className="primary-button"
-            onClick={() => window.location.reload()}
-          >
+          <button className="primary-button" onClick={() => window.location.reload()}>
             Try again
           </button>
         </div>

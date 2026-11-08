@@ -12,6 +12,7 @@ import {
   Pause,
   RotateCcw,
   Bot,
+  FastForward,
 } from "lucide-react";
 import { useFlight } from "./hooks/useFlight";
 import { useFlightAudio } from "./hooks/useFlightAudio";
@@ -320,6 +321,31 @@ export default function App() {
           <span>{(state.distance / 1000).toFixed(1)} km</span>
         </div>
         <div className="footer-toggles">
+          <div className="time-scale">
+            <label htmlFor="time-scale">
+              <FastForward size={14} /> Speed
+            </label>
+            <input
+              id="time-scale"
+              type="range"
+              min="1"
+              max="8"
+              step="1"
+              value={sim.settings.timeScale}
+              aria-valuetext={`${sim.settings.timeScale} times real time`}
+              style={{
+                "--range-progress": `${((sim.settings.timeScale - 1) / 7) * 100}%`,
+              }}
+              onChange={(event) =>
+                sim.setSettings((value) => ({
+                  ...value,
+                  timeScale: Number(event.target.value),
+                }))
+              }
+              onPointerUp={(event) => event.currentTarget.blur()}
+            />
+            <output htmlFor="time-scale">{sim.settings.timeScale}×</output>
+          </div>
           <button
             className={`thermal-toggle ${sim.autopilot ? "on" : ""}`}
             onClick={(event) => {
