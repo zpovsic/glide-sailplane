@@ -29,3 +29,13 @@ release. Add a tool name to select part of the graph. For example, run
 - [ ] If setup, runtime, or package-manager behavior looks wrong, run `vp env doctor` and include its output when asking for help.
 
 <!--VITE PLUS END-->
+
+## Learned User Preferences
+
+- Keep `src/styles.css` free of editor compatibility warnings: for Safari, put the `-webkit-` prefixed declaration (e.g. `-webkit-backdrop-filter`, `-webkit-user-select`) immediately before the standard property.
+
+## Learned Workspace Facts
+
+- All app styling lives in the single `src/styles.css` with hardcoded px font sizes; change existing rules in place instead of appending duplicate override blocks at the end of the file.
+- Modules under `src/sim/` are imported by tests run with Node's test runner, so relative imports there need explicit `.js` extensions.
+- The AI autopilot (`src/sim/autopilot.js`) returns control inputs per physics tick and is wired in through `src/hooks/useFlight.js`; `stepFlight` accepts numeric (analog) inputs as well as booleans.
